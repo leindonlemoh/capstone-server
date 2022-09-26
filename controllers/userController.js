@@ -104,20 +104,20 @@ exports.login = (req, res) => {
 };
 
 exports.addproducts = (req, res) => {
-  const {
-    product_name,
-    product_price,
-    product_image,
-    category_id,
-    product_description,
-  } = req.body;
+  const { product_name, product_price, category_id, product_description } =
+    req.body;
+
+  const product_image = req.files.product_image[0];
+  const imagePath =
+    req.protocol + "://" + "host" + "/public/uploads" + product_image.filename;
+  console.log(imagePath);
 
   db.query(
     ` INSERT INTO products SET ?`,
     {
       product_name: product_name,
       product_price: product_price,
-      product_image: product_image,
+      product_image: imagePath,
       category_id: category_id,
       product_description: product_description,
     },
@@ -126,7 +126,7 @@ exports.addproducts = (req, res) => {
         return console.log(err.message);
       }
       console.log("new product added");
-      res.send("addes");
+      res.send("product added");
     }
   );
 };
