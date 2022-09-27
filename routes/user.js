@@ -25,5 +25,6 @@ const imageUpload = upload.fields([{ name: "product_image" }]);
 router.post("/register", userController.register);
 router.post("/login", userController.login);
 router.post("/addproducts", imageUpload, userController.addproducts);
+router.get("/productlist", userController.fetch);
 
 module.exports = router;

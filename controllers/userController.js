@@ -130,3 +130,12 @@ exports.addproducts = (req, res) => {
     }
   );
 };
+
+exports.fetch = (req, res) => {
+  db.query(`SELECT * FROM products`, (err, result) => {
+    if (err) {
+      return console.log(err.message);
+    }
+    return res.status(200).json(result);
+  });
+};
