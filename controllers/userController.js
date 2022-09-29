@@ -139,3 +139,40 @@ exports.fetch = (req, res) => {
     return res.status(200).json(result);
   });
 };
+
+exports.getProducts = (req, res) => {
+  const id = req.params.id;
+  db.query(
+    `SELECT * FROM products
+    WHERE product_id = ? `,
+    id,
+    (err, result) => {
+      if (err) {
+        return console.log(err.message);
+      }
+      return res.status(200).json(result);
+    }
+  );
+};
+
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  const { product_name, product_price, product_image, product_description } =
+    req.body;
+
+  db.query(
+    `Update products
+    SET product_name = ?, product_price = ?, product_image = ?, product_description = ?
+    WHERE product_id = ?
+    `,
+    [product_name, product_price, product_image, product_description, id],
+    (err) => {
+      if (err) {
+        return console.log(err.message);
+      }
+      console.log("product updated");
+      return res.status(200).json({ message: "product updated successfully" });
+    }
+  );
+};
